@@ -12,14 +12,15 @@ images_test_dir = config.IMAGES_TEST_DIR
 xml_train_dir = config.XML_TRAIN_DIR
 xml_test_dir = config.XML_TEST_DIR
 
-def data_parser(xml_loc, flag):
+def data_parser(xml_loc, flag, xml_url):
     if flag == 0:
         images_dir = images_train_dir
     else:
         images_dir = images_test_dir
     parser = xml.dom.minidom.parse(xml_loc)
     root = parser.documentElement
-    img_name = images_dir + root.getElementsByTagName('filename').item(0).childNodes[0].nodeValue
+    #img_name = images_dir + root.getElementsByTagName('filename').item(0).childNodes[0].nodeValue
+    img_name = images_dir + xml_url.replace('xml', 'jpg')#要求xml文件与图片名称一致
     img_size = root.getElementsByTagName('size').item(0)
     img_width = int(img_size.getElementsByTagName('width').item(0).childNodes[0].nodeValue)
     img_height = int(img_size.getElementsByTagName('height').item(0).childNodes[0].nodeValue)
@@ -40,11 +41,11 @@ def data_parser(xml_loc, flag):
 if __name__ == "__main__":
     xmls_train = os.listdir(xml_train_dir)
     for xml_ in xmls_train:
-        data_parser(xml_train_dir + xml_, 0)
+        data_parser(xml_train_dir + xml_, 0, url_)
 
     xmls_test = os.listdir(xml_test_dir)
     for xml_ in xmls_test:
-        data_parser(xml_test_dir + xml_, 1)
+        data_parser(xml_test_dir + xml_, 1, url_)
         
     column_name = ['filename', 'width', 'height', 'class', 'xmin', 'ymin', 'xmax', 'ymax']
     xml_df_train = pd.DataFrame(xml_list_train, columns=column_name)

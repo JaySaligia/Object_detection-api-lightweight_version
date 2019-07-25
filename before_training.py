@@ -38,7 +38,7 @@ def make_pbtxt():
         item = 'item {\nid:' + str(i+1) + '\n' + 'name:\'{}\'\n'.format(config.LABELS[i]) + '}\n'
         data.append(item)
 
-    with open(config.LABELMAP, 'r+') as f:
+    with open(config.LABELMAP, 'w') as f:
         f.writelines(data)
     
     print('pbtxt has been writen')
