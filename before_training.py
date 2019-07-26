@@ -1,4 +1,4 @@
-import config
+﻿import config
 import os
 #仅修改num_class,num_steps和写入相关模型文件的位置
 import tensorflow as tf
@@ -17,7 +17,7 @@ def make_config(id):
             elif line.find('num_steps') >= 0:
                 line = '    num_steps: {}'.format(config.MAX_STEPS) + '\n'
             elif line.find('fine_tune_checkpoint') >=0 :
-                line = '    fine_tune_checkpoint: "{}"'.format(os.getcwd().replace('\\', '/') + '/' + config.MODEL_CKPT[0]) + '\n'
+                line = '    fine_tune_checkpoint: "{}"'.format(os.getcwd().replace('\\', '/') + '/' + config.MODEL_CKPT[id]) + '\n'
             elif line.find('input_path') >= 0:
                 if count == 0:
                     line = '    input_path: "{}"'.format(os.getcwd().replace('\\', '/') + '/' + config.TRAIN_TF) + '\n'
